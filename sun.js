@@ -200,7 +200,7 @@
     if (m < 1) return 'a moment';
     if (m < 60) return `${m} minute${m === 1 ? '' : 's'}`;
     const h = Math.floor(m / 60), r = m % 60;
-    if (h >= 3 || r === 0) return `${Math.round(m / 60)} hours`;
+    if (h >= 3 || r === 0) { const H = Math.round(m / 60); return `${H} hour${H === 1 ? '' : 's'}`; }
     return `${h} hour${h === 1 ? '' : 's'} ${r} minute${r === 1 ? '' : 's'}`;
   }
   const clock = (d, tz) => new Intl.DateTimeFormat('en-US', { timeZone: tz, hour: 'numeric', minute: '2-digit' })

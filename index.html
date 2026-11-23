@@ -121,79 +121,122 @@
   }
   .hero p.now { opacity: 1; }
 
-  /* ---------- the day ---------- */
-  .hour {
-    padding: clamp(56px, 9vw, 112px) var(--gutter);
-    display: grid;
-    grid-template-columns: minmax(9rem, 16rem) minmax(0, var(--measure));
-    column-gap: clamp(24px, 5vw, 72px);
-    align-items: start;
+  /* ---------- projects slideshow ---------- */
+  .projects {
+    background: var(--late);
+    color: var(--moon);
+    padding: clamp(56px, 8vw, 104px) 0 clamp(40px, 6vw, 72px);
   }
-  .hour.morning   { background: var(--morning); }
-  .hour.work      { background: var(--work); }
-  .hour.afternoon { background: var(--afternoon); }
-  .hour.dusk      { background: var(--dusk); }
-  .hour.night     { background: var(--night); color: var(--moon); }
-  .hour.late      { background: var(--late);  color: var(--moon); }
-
-  .when {
+  .projects-head {
+    padding: 0 var(--gutter);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: 20px 32px;
+    margin-bottom: clamp(24px, 4vw, 40px);
+  }
+  .projects-head h2 {
     font-family: var(--display);
     font-weight: 300;
     font-variation-settings: "wdth" 75;
     font-size: clamp(2.5rem, 6vw, 4.5rem);
     line-height: .95;
     letter-spacing: -0.02em;
-    position: sticky;
-    top: 24px;
   }
-  .when small {
-    display: block;
-    margin-top: .6rem;
-    font-family: var(--body);
-    font-weight: 400;
-    font-size: .95rem;
-    letter-spacing: 0;
-    opacity: .7;
+  .tabs { display: flex; flex-wrap: wrap; gap: 6px; max-width: 46rem; }
+  .tabs button {
+    font: 500 .95rem/1 var(--display);
+    color: var(--moon-soft);
+    background: transparent;
+    border: 1px solid #2E3556;
+    border-radius: 999px;
+    padding: 8px 13px;
+    cursor: pointer;
   }
-  .when .here {
-    display: none;
-    margin-top: .9rem;
-    font-family: var(--display);
-    font-weight: 600;
-    font-size: .95rem;
-    letter-spacing: 0;
-    color: var(--apricot-deep);
-  }
-  .night .when .here, .late .when .here { color: var(--apricot); }
-  .hour.is-now .when .here { display: block; }
+  .tabs button:hover { color: var(--moon); border-color: #46507A; }
+  .tabs button[aria-current="true"] { background: var(--moon); color: var(--late); border-color: transparent; }
 
-  .things { display: grid; gap: clamp(40px, 6vw, 64px); }
-  .thing h3 {
+  .track {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 100%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+  .track::-webkit-scrollbar { display: none; }
+  .track:focus-visible { outline: 3px solid var(--apricot); outline-offset: -3px; }
+  .slide {
+    scroll-snap-align: start;
+    padding: 0 var(--gutter);
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(15rem, 1fr);
+    gap: clamp(24px, 4vw, 56px);
+    align-items: center;
+  }
+  .slide { --shot-h: clamp(260px, 46vw, 520px); }
+  .shot { height: var(--shot-h); display: grid; place-items: center; }
+  .shot img {
+    display: block;
+    max-width: 100%;
+    max-height: var(--shot-h);
+    border-radius: 12px;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, .08), 0 28px 60px -24px rgba(0, 0, 0, .7);
+  }
+  .shot.phone img { border-radius: 30px; }
+  .shot.plain {
+    width: 100%;
+    border-radius: 12px;
+    background: linear-gradient(160deg, #252C4A, #1C2240);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .06);
+    align-content: center;
+    gap: .5rem;
+  }
+  .shot.plain span {
+    font-family: var(--display);
+    font-weight: 700;
+    font-variation-settings: "wdth" 80;
+    font-size: clamp(2.75rem, 7vw, 5.5rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .shot.plain small { font-size: 1rem; color: var(--moon-soft); }
+
+  .slide h3 {
     font-family: var(--display);
     font-weight: 650;
-    font-size: clamp(1.5rem, 2.6vw, 1.95rem);
-    line-height: 1.1;
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    line-height: 1.05;
     letter-spacing: -0.01em;
   }
-  .thing p { margin-top: .6rem; }
-  .thing .made {
-    margin-top: .75rem;
-    font-size: .92rem;
-    font-style: italic;
-    color: var(--ink-soft);
+  .slide h3 a { color: inherit; }
+  .slide p { margin-top: .75rem; }
+  .slide .made { margin-top: 1rem; font-size: .92rem; font-style: italic; color: var(--moon-soft); }
+
+  .controls { display: flex; align-items: center; gap: 12px; padding: clamp(24px, 3vw, 36px) var(--gutter) 0; }
+  .controls button {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: 1px solid #2E3556;
+    background: transparent;
+    color: var(--moon);
+    font: 400 1.4rem/1 var(--display);
+    cursor: pointer;
   }
-  .night .thing .made, .late .thing .made { color: var(--moon-soft); }
+  .controls button:hover:not(:disabled) { border-color: var(--moon-soft); }
+  .controls button:disabled { opacity: .35; cursor: default; }
+  .counter { margin-left: 6px; font-family: var(--display); font-variant-numeric: tabular-nums; color: var(--moon-soft); }
+  .tabs button:focus-visible, .controls button:focus-visible { outline: 3px solid var(--apricot); outline-offset: 2px; }
 
   /* ---------- older + contact ---------- */
   .after {
     background: var(--late);
     color: var(--moon);
-    padding: 0 var(--gutter) clamp(64px, 10vw, 120px);
-    display: grid;
-    grid-template-columns: minmax(9rem, 16rem) minmax(0, var(--measure));
-    column-gap: clamp(24px, 5vw, 72px);
+    padding: clamp(48px, 7vw, 88px) var(--gutter) clamp(64px, 10vw, 120px);
   }
-  .after .col { grid-column: 2; }
+  .after .col { max-width: var(--measure); padding-top: clamp(32px, 5vw, 56px); border-top: 1px solid #2E3556; }
   .after h3 {
     font-family: var(--display);
     font-weight: 650;
@@ -202,15 +245,16 @@
   }
   .older { list-style: none; padding: 0; display: grid; gap: .5rem; color: var(--moon-soft); }
   .older a { color: var(--moon); }
-  .contact { margin-top: clamp(48px, 7vw, 80px); padding-top: 32px; border-top: 1px solid #2E3556; }
+  .contact { margin-top: clamp(40px, 6vw, 64px); }
   .contact p { color: var(--moon-soft); }
   .links { display: flex; flex-wrap: wrap; gap: .5rem 1.75rem; margin-top: 1rem; font-family: var(--display); font-size: 1.2rem; font-weight: 600; }
   .links a { color: var(--moon); }
 
-  @media (max-width: 720px) {
-    .hour, .after { grid-template-columns: 1fr; }
-    .when { position: static; margin-bottom: 28px; }
-    .after .col { grid-column: 1; }
+  @media (max-width: 760px) {
+    .slide { grid-template-columns: 1fr; align-items: start; align-content: start; gap: 24px; }
+    .slide { --shot-h: 62svh; }
+    .shot { height: auto; }
+    .shot.plain { aspect-ratio: 16 / 10; }
     .hero-inner { max-width: none; }
     .sun { width: 110px; }
   }
@@ -224,7 +268,7 @@
 <body>
 
 <nav class="switch" aria-label="Choose a version of this site">
-  <a href="./" aria-current="page">A day</a>
+  <a href="./" aria-current="page">Projects</a>
   <a href="wtf.html">wtf?</a>
 </nav>
 
@@ -233,85 +277,96 @@
   <div class="sun" aria-hidden="true"></div>
   <div class="hero-inner">
     <h1>Hi, I'm Tigran. I make small software for my own day.</h1>
-    <p>Most of these started as something that annoyed me before lunch. Here's a day of them, in the order I use them.</p>
+    <p>Most of these started as something that annoyed me before lunch. Then I kept using them.</p>
     <p class="now" id="now" aria-live="polite"></p>
   </div>
 </header>
 
 <main>
-  <section class="hour morning" aria-labelledby="t-morning">
-    <h2 class="when" id="t-morning">Morning<small>8:30, every day</small><span class="here">Right now</span></h2>
-    <div class="things">
-      <article class="thing">
-        <h3>Sleep Diary</h3>
-        <p>A nudge at 8:30 to fill in the Consensus Sleep Diary, the standard questionnaire sleep researchers use. It works out time in bed and sleep efficiency for me, and exports a spreadsheet.</p>
-        <p class="made">Mac and iPhone. Answers never leave the device.</p>
+  <section class="projects" aria-roledescription="carousel" aria-labelledby="projects-title">
+    <div class="projects-head">
+      <h2 id="projects-title">Things I made</h2>
+      <div class="tabs" role="group" aria-label="Jump to a project">
+        <button type="button" data-go="0" aria-current="true">drumhero</button>
+        <button type="button" data-go="1">telly</button>
+        <button type="button" data-go="2">Plane</button>
+        <button type="button" data-go="3">thoughts</button>
+        <button type="button" data-go="4">Earshot</button>
+        <button type="button" data-go="5">Workouts</button>
+        <button type="button" data-go="6">Focus Check</button>
+        <button type="button" data-go="7">Sleep Diary</button>
+      </div>
+    </div>
+    <div class="track" id="track" tabindex="0" aria-label="Projects, use the arrow keys to move between them">
+      <article class="slide" id="drumhero" role="group" aria-roledescription="slide" aria-label="1 of 8: drumhero">
+        <div class="shot"><img src="shots/drumhero.jpg" alt="drumhero in a browser: a drum kit on a stage in front of a crowd, with glowing rings marking the next notes to hit" loading="eager"></div>
+        <div>
+          <h3>drumhero</h3>
+          <p>Sit behind a real-size drum kit in VR, sticks in hand, and play along with a band and a crowd that react to how well you're hitting. It can chart your own songs from the audio.</p>
+          <p class="made">Meta Quest, or any browser.</p>
+        </div>
+      </article>
+      <article class="slide" id="telly" role="group" aria-roledescription="slide" aria-label="2 of 8: telly">
+        <div class="shot phone"><img src="shots/telly.jpg" alt="telly on a phone: a grid of recently watched show posters with a star rating, and a review below" loading="lazy"></div>
+        <div>
+          <h3>telly</h3>
+          <p>A diary for TV and anime: what I watched, when, and what I thought of it. Like Letterboxd for everything that isn't there.</p>
+          <p class="made">Web and iPhone.</p>
+        </div>
+      </article>
+      <article class="slide" id="plane" role="group" aria-roledescription="slide" aria-label="3 of 8: Plane">
+        <div class="shot"><img src="shots/plane.jpg" alt="Plane's canvas: note cards, a small table and three colored sticky notes" loading="lazy"></div>
+        <div>
+          <h3>Plane</h3>
+          <p>An infinite canvas for notes, photos, 3D models, live websites and music, all on one board. Put on a Meta Quest and the same board becomes a room you can stand in.</p>
+          <p class="made">Mac app, with a WebXR room for the Quest.</p>
+        </div>
+      </article>
+      <article class="slide" id="thoughts" role="group" aria-roledescription="slide" aria-label="4 of 8: thoughts">
+        <div class="shot"><img src="shots/thoughts.jpg" alt="thoughts: a box for writing a post, with recent posts listed below" loading="lazy"></div>
+        <div>
+          <h3>thoughts</h3>
+          <p>A place to post a thought without opening a feed. Writing something down shouldn't cost me forty minutes of scrolling.</p>
+          <p class="made">Web, Mac and iPhone.</p>
+        </div>
+      </article>
+      <article class="slide" id="earshot" role="group" aria-roledescription="slide" aria-label="5 of 8: Earshot">
+        <div class="shot plain" aria-hidden="true"><span>Earshot</span><small>Mac</small></div>
+        <div>
+          <h3><a href="https://github.com/tigran3rd/earshot">Earshot</a></h3>
+          <p>A little retro recorder, VU meter included, that captures whatever audio an app is playing, with no microphone. I use it to save shows in Russian, Armenian and Mandarin to study later.</p>
+          <p class="made">Mac. Open source.</p>
+        </div>
+      </article>
+      <article class="slide" id="workouts" role="group" aria-roledescription="slide" aria-label="6 of 8: Workouts">
+        <div class="shot plain" aria-hidden="true"><span>Workouts</span><small>iPhone</small></div>
+        <div>
+          <h3>Workouts</h3>
+          <p>A workout logger fast enough to use with sweaty hands: sets, drop sets, cardio, which gym, which machine. Every set gets a timestamp and the rest timer starts on its own.</p>
+          <p class="made">iPhone. Syncs to my Notion when it can.</p>
+        </div>
+      </article>
+      <article class="slide" id="focus-check" role="group" aria-roledescription="slide" aria-label="7 of 8: Focus Check">
+        <div class="shot plain" aria-hidden="true"><span>Focus Check</span><small>Mac menu bar</small></div>
+        <div>
+          <h3>Focus Check</h3>
+          <p>Every so often it glances at my screen and asks whether I'm still doing what I said I'd do. Over a thousand check-ins so far, which is a humbling chart.</p>
+          <p class="made">Mac menu bar app. Screenshots stay in memory and are never saved.</p>
+        </div>
+      </article>
+      <article class="slide" id="sleep-diary" role="group" aria-roledescription="slide" aria-label="8 of 8: Sleep Diary">
+        <div class="shot plain" aria-hidden="true"><span>Sleep Diary</span><small>Mac and iPhone</small></div>
+        <div>
+          <h3>Sleep Diary</h3>
+          <p>A nudge at 8:30 every morning to fill in the Consensus Sleep Diary, the standard questionnaire sleep researchers use. It works out time in bed and sleep efficiency, and exports a spreadsheet.</p>
+          <p class="made">Mac and iPhone. Answers never leave the device.</p>
+        </div>
       </article>
     </div>
-  </section>
-
-  <section class="hour work" aria-labelledby="t-work">
-    <h2 class="when" id="t-work">Working<small>while I should be focused</small><span class="here">Right now</span></h2>
-    <div class="things">
-      <article class="thing">
-        <h3>Focus Check</h3>
-        <p>Every so often it glances at my screen and asks whether I'm still doing what I said I'd do. Over a thousand check-ins so far, which is a humbling chart.</p>
-        <p class="made">Mac menu bar app. Screenshots stay in memory and are never saved.</p>
-      </article>
-      <article class="thing">
-        <h3>Plane</h3>
-        <p>An infinite canvas for notes, photos, 3D models, live websites and music, all on one board. Put on a Meta Quest and the same board becomes a room you can stand in.</p>
-        <p class="made">Mac app, with a WebXR room for the Quest.</p>
-      </article>
-    </div>
-  </section>
-
-  <section class="hour afternoon" aria-labelledby="t-afternoon">
-    <h2 class="when" id="t-afternoon">At the gym<small>between sets</small><span class="here">Right now</span></h2>
-    <div class="things">
-      <article class="thing">
-        <h3>Workouts</h3>
-        <p>A workout logger fast enough to use with sweaty hands: sets, drop sets, cardio, which gym, which machine. Every set gets a timestamp and the rest timer starts on its own.</p>
-        <p class="made">iPhone. Syncs to my Notion when it can.</p>
-      </article>
-    </div>
-  </section>
-
-  <section class="hour dusk" aria-labelledby="t-dusk">
-    <h2 class="when" id="t-dusk">Evening<small>studying</small><span class="here">Right now</span></h2>
-    <div class="things">
-      <article class="thing">
-        <h3><a href="https://github.com/tigran3rd/earshot">Earshot</a></h3>
-        <p>A little retro recorder, VU meter included, that captures whatever audio an app is playing, with no microphone. I use it to save shows in Russian, Armenian and Mandarin to study later.</p>
-        <p class="made">Mac. Open source.</p>
-      </article>
-    </div>
-  </section>
-
-  <section class="hour night" aria-labelledby="t-night">
-    <h2 class="when" id="t-night">Night<small>on the couch</small><span class="here">Right now</span></h2>
-    <div class="things">
-      <article class="thing">
-        <h3>telly</h3>
-        <p>A diary for TV and anime: what I watched, when, and what I thought of it. Like Letterboxd for everything that isn't there.</p>
-        <p class="made">Web and iPhone.</p>
-      </article>
-      <article class="thing">
-        <h3>thoughts</h3>
-        <p>A place to post a thought without opening a feed. Writing something down shouldn't cost me forty minutes of scrolling.</p>
-        <p class="made">Web, Mac and iPhone.</p>
-      </article>
-    </div>
-  </section>
-
-  <section class="hour late" aria-labelledby="t-late">
-    <h2 class="when" id="t-late">Too late<small>headset on</small><span class="here">Right now</span></h2>
-    <div class="things">
-      <article class="thing">
-        <h3>drumhero</h3>
-        <p>Sit behind a real-size drum kit in VR, sticks in hand, and play along with a band and a crowd that react to how well you're hitting. It can chart your own songs from the audio.</p>
-        <p class="made">Meta Quest, or any browser.</p>
-      </article>
+    <div class="controls">
+      <button type="button" id="prev" aria-label="Previous project">&lsaquo;</button>
+      <button type="button" id="next" aria-label="Next project">&rsaquo;</button>
+      <span class="counter" id="counter" aria-live="polite">1 / 8</span>
     </div>
   </section>
 
@@ -338,21 +393,68 @@
 </main>
 
 <script>
-  // Mark the part of the day the sun says it is where Tigran is.
   document.addEventListener('sun', ({ detail: s }) => {
-    const T = s.time.getTime(), e = s.events, H = 3600e3;
-    let part;
-    if (!e.sunrise || !e.sunset) part = s.localHour < 12 ? 'late' : 'night';
-    else if (e.civilBegin && T >= e.civilBegin && T < e.sunrise.getTime() + 3 * H) part = 'morning';
-    else if (T >= e.sunrise && T < e.sunset.getTime() - 2 * H) part = 'work';
-    else if (T >= e.sunrise && T < e.sunset.getTime() - 0.5 * H) part = 'afternoon';
-    else if (e.civilEnd && T >= e.sunset.getTime() - 0.5 * H && T < e.civilEnd.getTime() + H) part = 'dusk';
-    else part = s.localHour >= 12 ? 'night' : 'late';
-    document.querySelectorAll('.hour').forEach(el => el.classList.toggle('is-now', el.classList.contains(part)));
-
-    const now = document.getElementById('now');
-    now.innerHTML = `It's <time>${s.localTime}</time> where I am. ${s.sentence}`;
+    document.getElementById('now').innerHTML = `It's <time>${s.localTime}</time> where I am. ${s.sentence}`;
   });
+
+  // Project slideshow: scroll-snap track, buttons, name tabs, arrow keys, #hash links.
+  (() => {
+    const track = document.getElementById('track');
+    const slides = [...track.querySelectorAll('.slide')];
+    const tabs = [...document.querySelectorAll('.tabs button')];
+    const prev = document.getElementById('prev'), next = document.getElementById('next');
+    const counter = document.getElementById('counter');
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let current = -1;
+    let target = null; // slide a button, tab or link is scrolling to
+
+    const go = i => {
+      i = Math.max(0, Math.min(slides.length - 1, i));
+      target = i;
+      track.scrollTo({ left: i * track.clientWidth, behavior: reduce ? 'instant' : 'smooth' });
+      show(i);
+    };
+    function show(i) {
+      if (i === current) return;
+      current = i;
+      counter.textContent = `${i + 1} / ${slides.length}`;
+      tabs.forEach((t, j) => t.setAttribute('aria-current', j === i ? 'true' : 'false'));
+      slides.forEach((s, j) => s.inert = j !== i);
+      prev.disabled = i === 0;
+      next.disabled = i === slides.length - 1;
+      history.replaceState(null, '', i === 0 ? location.pathname + location.search : '#' + slides[i].id);
+    }
+
+    let settle;
+    track.addEventListener('scroll', () => {
+      clearTimeout(settle);
+      settle = setTimeout(() => {
+        const i = Math.round(track.scrollLeft / track.clientWidth);
+        if (target !== null && i !== target) return; // still on the way
+        target = null;
+        show(i);
+      }, 80);
+    }, { passive: true });
+    // A swipe or wheel takes over from a button's scroll.
+    for (const type of ['touchstart', 'wheel', 'pointerdown']) track.addEventListener(type, () => { target = null; }, { passive: true });
+    prev.addEventListener('click', () => go(current - 1));
+    next.addEventListener('click', () => go(current + 1));
+    tabs.forEach((t, i) => t.addEventListener('click', () => go(i)));
+    track.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') { e.preventDefault(); go(current + 1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); go(current - 1); }
+    });
+
+    // Open on the project named in the address (e.g. #telly), if any.
+    const start = Math.max(0, slides.findIndex(s => '#' + s.id === location.hash));
+    show(start);
+    if (start) track.scrollTo({ left: start * track.clientWidth, behavior: 'instant' });
+    addEventListener('hashchange', () => {
+      const i = slides.findIndex(s => '#' + s.id === location.hash);
+      if (i >= 0) go(i);
+    });
+    addEventListener('resize', () => track.scrollTo({ left: current * track.clientWidth, behavior: 'instant' }));
+  })();
 </script>
 </body>
 </html>
