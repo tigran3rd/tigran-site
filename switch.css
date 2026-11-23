@@ -1,0 +1,31 @@
+/* Version switch, shown at the top of every version while Tigran picks one. */
+.switch {
+  position: fixed;
+  top: 12px;
+  left: 50%;
+  translate: -50% 0;
+  z-index: 50;
+  display: flex;
+  padding: 4px;
+  gap: 2px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, .06), 0 0 0 1px rgba(20, 24, 40, .08);
+  font: 500 14px/1 system-ui, -apple-system, sans-serif;
+}
+.switch a {
+  color: #2A3042;
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.switch a:hover { background: rgba(20, 24, 40, .06); color: #2A3042; }
+.switch a[aria-current="page"] { background: #1E2433; color: #fff; }
+.switch a:focus-visible { outline: 2px solid #E8923A; outline-offset: 2px; }
+:root[data-dark="true"] .switch { background: rgba(20, 24, 44, .7); box-shadow: 0 0 0 1px rgba(255, 255, 255, .1); }
+:root[data-dark="true"] .switch a { color: #D8DCEB; }
+:root[data-dark="true"] .switch a:hover { background: rgba(255, 255, 255, .08); }
+:root[data-dark="true"] .switch a[aria-current="page"] { background: #E7E9F3; color: #161B31; }

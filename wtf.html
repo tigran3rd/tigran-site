@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>wtf?</title>
+<meta name="description" content="what the fuck are you doing with your life, Tigran? idk, but something cool.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='12' fill='%23E8923A'/></svg>">
+<link rel="stylesheet" href="switch.css">
+<script src="sun.js" defer></script>
+<style>
+  :root {
+    --card: #ffffff;
+    --heading: #1f2937;
+    --text: #4b5563;
+    --muted: #6b7280;
+    --link: #3b82f6;
+    --rule: #e5e7eb;
+  }
+  :root[data-dark="true"] {
+    --card: #141a2e;
+    --heading: #f3f4f6;
+    --text: #c7cbd6;
+    --muted: #8f96aa;
+    --link: #7fb0ff;
+    --rule: #262d45;
+  }
+
+  * { box-sizing: border-box; margin: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    min-height: 100vh;
+    min-height: 100svh;
+    /* the sky as it is right now where Tigran is (set by sun.js) */
+    background: #f3f4f6 fixed linear-gradient(to bottom, var(--sky-top, #f3f4f6), var(--sky-bottom, #f3f4f6));
+    font-family: Inter, system-ui, sans-serif;
+    color: var(--text);
+    line-height: 1.6;
+    padding: 88px 16px 64px;
+  }
+
+  main {
+    max-width: 38rem;
+    margin: 0 auto;
+    padding: 24px;
+    background: var(--card);
+    border-radius: 8px;
+  }
+  :root[data-ready] main { transition: background 1.5s, color 1.5s; }
+  @media (min-width: 640px) { main { padding: 32px 36px; } }
+
+  h1 { font-size: 1.25rem; font-weight: 600; line-height: 1.4; color: var(--heading); margin-bottom: 1rem; }
+  h1 i { font-weight: 600; }
+  h2 { font-size: .95rem; font-weight: 600; color: var(--heading); margin: 2rem 0 .75rem; }
+  p { margin-bottom: 1rem; }
+
+  a { color: var(--link); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  a:focus-visible { outline: 2px solid var(--link); outline-offset: 2px; border-radius: 2px; }
+
+  ul { list-style: none; padding: 0; }
+  li { margin-bottom: .6rem; }
+  li strong { color: var(--heading); font-weight: 600; }
+  .older li { margin-bottom: .4rem; }
+
+  .now {
+    margin: 2rem 0 0;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--rule);
+    font-size: .95rem;
+    color: var(--muted);
+    min-height: 3.2em;
+  }
+  .contact { margin: .5rem 0 0; display: flex; gap: 1.25rem; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+
+<nav class="switch" aria-label="Choose a version of this site">
+  <a href="./">A day</a>
+  <a href="wtf.html" aria-current="page">wtf?</a>
+</nav>
+
+<main>
+  <h1>I often get asked, "<i>what the fuck</i> are you doing with your life?"</h1>
+  <p>This website is meant as a general answer to that question.</p>
+  <p>Mostly: building small things for my own life, then using them every day.</p>
+
+  <h2>right now</h2>
+  <ul>
+    <li><strong><a href="https://github.com/tigran3rd/earshot">earshot</a></strong>: records whatever audio an app is playing, so i can study shows in russian, armenian and mandarin.</li>
+    <li><strong>drumhero</strong>: vr drumming. sit behind a real-size kit, sticks in hand, band and crowd reacting to you.</li>
+    <li><strong>plane</strong>: an infinite canvas for notes, photos, 3d models and websites. on a quest it becomes a room.</li>
+    <li><strong>thoughts</strong>: a place to post a thought without opening a feed.</li>
+    <li><strong>telly</strong>: a diary for tv and anime, like letterboxd for episodes.</li>
+    <li><strong>workouts</strong>: logging sets at the gym fast enough to keep up with me.</li>
+    <li><strong>focus check</strong>: asks every so often whether i'm still doing what i said i'd do.</li>
+    <li><strong>sleep diary</strong>: 8:30 every morning, how did i sleep.</li>
+  </ul>
+
+  <h2>before</h2>
+  <ul class="older">
+    <li><a href="https://github.com/tigran3rd/zentweet">zentweet</a>: open-source extension forcing you to use twitter only to post.</li>
+    <li><a href="https://github.com/tigran3rd/post-n-ghost">post-n-ghost</a>: the same idea, for every site.</li>
+    <li>hustle house: a small hustle-focused house in sf. quiet, pretty, and cheap.</li>
+  </ul>
+
+  <p class="now" id="now" aria-live="polite"></p>
+  <div class="contact">
+    <a href="https://t.me/tig_rank">telegram</a>
+    <a href="https://www.linkedin.com/in/tig-rank/">linkedin</a>
+    <a href="https://github.com/tigran3rd">github</a>
+  </div>
+</main>
+
+<script>
+  document.addEventListener('sun', ({ detail: s }) => {
+    document.getElementById('now').textContent =
+      `where i am, it's ${s.localTime}. ${s.sentence.toLowerCase()}`;
+  });
+</script>
+</body>
+</html>
