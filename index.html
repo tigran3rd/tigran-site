@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tigran</title>
+<meta name="description" content="Tigran makes small software for his own day: a sleep diary, a focus checker, a workout logger, a VR drum game and more.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='12' fill='%23E8923A'/></svg>">
+<style>
+  :root {
+    --morning: #DCE6EE;
+    --work: #F4F5F0;
+    --afternoon: #F0E1C4;
+    --dusk: #CDB6CC;
+    --night: #252C4A;
+    --late: #161B31;
+    --ink: #1E2433;
+    --ink-soft: #4A5266;
+    --moon: #E7E9F3;
+    --moon-soft: #A9AFC7;
+    --apricot: #E8923A;
+    --apricot-deep: #B5631A;
+
+    --display: "Bricolage Grotesque", system-ui, sans-serif;
+    --body: "Literata", Georgia, serif;
+    --measure: 36rem;
+    --gutter: clamp(16px, 5vw, 48px);
+  }
+
+  * { box-sizing: border-box; margin: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    background: var(--morning);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    font-optical-sizing: auto;
+  }
+
+  a { color: inherit; text-decoration-color: var(--apricot); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+  a:hover { color: var(--apricot-deep); }
+  a:focus-visible { outline: 3px solid var(--apricot); outline-offset: 3px; border-radius: 2px; }
+
+  /* ---------- hero ---------- */
+  .hero {
+    min-height: 88vh;
+    min-height: 88svh;
+    display: grid;
+    align-content: end;
+    padding: 18vh var(--gutter) 12vh;
+    position: relative;
+    overflow: hidden;
+  }
+  .sun {
+    position: absolute;
+    width: clamp(140px, 20vw, 260px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 40%, #F7C27D, var(--apricot) 70%);
+    right: 8vw;
+    top: 9vh;
+    animation: rise 2.4s cubic-bezier(.2,.7,.2,1) both;
+  }
+  @keyframes rise { from { transform: translateY(60%); opacity: 0; } to { transform: none; opacity: 1; } }
+
+  .hero-inner { position: relative; max-width: min(58rem, 64vw); }
+  .hero h1 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-variation-settings: "wdth" 80;
+    font-size: clamp(2.75rem, 9vw, 7.25rem);
+    line-height: .92;
+    letter-spacing: -0.03em;
+  }
+  .hero p {
+    margin-top: 1.75rem;
+    max-width: 30rem;
+    font-size: clamp(1.0625rem, 1.6vw, 1.25rem);
+    color: var(--ink-soft);
+  }
+
+  /* ---------- the day ---------- */
+  .hour {
+    padding: clamp(56px, 9vw, 112px) var(--gutter);
+    display: grid;
+    grid-template-columns: minmax(9rem, 16rem) minmax(0, var(--measure));
+    column-gap: clamp(24px, 5vw, 72px);
+    align-items: start;
+  }
+  .hour.morning   { background: var(--morning); }
+  .hour.work      { background: var(--work); }
+  .hour.afternoon { background: var(--afternoon); }
+  .hour.dusk      { background: var(--dusk); }
+  .hour.night     { background: var(--night); color: var(--moon); }
+  .hour.late      { background: var(--late);  color: var(--moon); }
+
+  .when {
+    font-family: var(--display);
+    font-weight: 300;
+    font-variation-settings: "wdth" 75;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: .95;
+    letter-spacing: -0.02em;
+    position: sticky;
+    top: 24px;
+  }
+  .when small {
+    display: block;
+    margin-top: .6rem;
+    font-family: var(--body);
+    font-weight: 400;
+    font-size: .95rem;
+    letter-spacing: 0;
+    opacity: .7;
+  }
+
+  .things { display: grid; gap: clamp(40px, 6vw, 64px); }
+  .thing h3 {
+    font-family: var(--display);
+    font-weight: 650;
+    font-size: clamp(1.5rem, 2.6vw, 1.95rem);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+  .thing p { margin-top: .6rem; }
+  .thing .made {
+    margin-top: .75rem;
+    font-size: .92rem;
+    font-style: italic;
+    color: var(--ink-soft);
+  }
+  .night .thing .made, .late .thing .made { color: var(--moon-soft); }
+
+  /* ---------- older + contact ---------- */
+  .after {
+    background: var(--late);
+    color: var(--moon);
+    padding: 0 var(--gutter) clamp(64px, 10vw, 120px);
+    display: grid;
+    grid-template-columns: minmax(9rem, 16rem) minmax(0, var(--measure));
+    column-gap: clamp(24px, 5vw, 72px);
+  }
+  .after .col { grid-column: 2; }
+  .after h3 {
+    font-family: var(--display);
+    font-weight: 650;
+    font-size: 1.25rem;
+    margin-bottom: .75rem;
+  }
+  .older { list-style: none; padding: 0; display: grid; gap: .5rem; color: var(--moon-soft); }
+  .older a { color: var(--moon); }
+  .contact { margin-top: clamp(48px, 7vw, 80px); padding-top: 32px; border-top: 1px solid #2E3556; }
+  .contact p { color: var(--moon-soft); }
+  .links { display: flex; flex-wrap: wrap; gap: .5rem 1.75rem; margin-top: 1rem; font-family: var(--display); font-size: 1.2rem; font-weight: 600; }
+  .links a { color: var(--moon); }
+
+  @media (max-width: 720px) {
+    .hour, .after { grid-template-columns: 1fr; }
+    .when { position: static; margin-bottom: 28px; }
+    .after .col { grid-column: 1; }
+    .sun { right: -10vw; top: 6vh; }
+    .hero-inner { max-width: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sun { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="sun" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <h1>Hi, I'm Tigran. I make small software for my own day.</h1>
+    <p>Most of these started as something that annoyed me before lunch. Here's a day of them, in the order I use them.</p>
+  </div>
+</header>
+
+<main>
+  <section class="hour morning" aria-labelledby="t-morning">
+    <h2 class="when" id="t-morning">Morning<small>8:30, every day</small></h2>
+    <div class="things">
+      <article class="thing">
+        <h3>Sleep Diary</h3>
+        <p>A nudge at 8:30 to fill in the Consensus Sleep Diary, the standard questionnaire sleep researchers use. It works out time in bed and sleep efficiency for me, and exports a spreadsheet.</p>
+        <p class="made">Mac and iPhone. Answers never leave the device.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="hour work" aria-labelledby="t-work">
+    <h2 class="when" id="t-work">Working<small>while I should be focused</small></h2>
+    <div class="things">
+      <article class="thing">
+        <h3>Focus Check</h3>
+        <p>Every so often it glances at my screen and asks whether I'm still doing what I said I'd do. Over a thousand check-ins so far, which is a humbling chart.</p>
+        <p class="made">Mac menu bar app. Screenshots stay in memory and are never saved.</p>
+      </article>
+      <article class="thing">
+        <h3>Plane</h3>
+        <p>An infinite canvas for notes, photos, 3D models, live websites and music, all on one board. Put on a Meta Quest and the same board becomes a room you can stand in.</p>
+        <p class="made">Mac app, with a WebXR room for the Quest.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="hour afternoon" aria-labelledby="t-afternoon">
+    <h2 class="when" id="t-afternoon">At the gym<small>between sets</small></h2>
+    <div class="things">
+      <article class="thing">
+        <h3>Workouts</h3>
+        <p>A workout logger fast enough to use with sweaty hands: sets, drop sets, cardio, which gym, which machine. Every set gets a timestamp and the rest timer starts on its own.</p>
+        <p class="made">iPhone. Syncs to my Notion when it can.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="hour dusk" aria-labelledby="t-dusk">
+    <h2 class="when" id="t-dusk">Evening<small>studying</small></h2>
+    <div class="things">
+      <article class="thing">
+        <h3><a href="https://github.com/tigran3rd/earshot">Earshot</a></h3>
+        <p>A little retro recorder, VU meter included, that captures whatever audio an app is playing, with no microphone. I use it to save shows in Russian, Armenian and Mandarin to study later.</p>
+        <p class="made">Mac. Open source.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="hour night" aria-labelledby="t-night">
+    <h2 class="when" id="t-night">Night<small>on the couch</small></h2>
+    <div class="things">
+      <article class="thing">
+        <h3>telly</h3>
+        <p>A diary for TV and anime: what I watched, when, and what I thought of it. Letterboxd, but for episodes.</p>
+        <p class="made">Web and iPhone.</p>
+      </article>
+      <article class="thing">
+        <h3>thoughts</h3>
+        <p>A place to post a thought without opening a feed. Writing something down shouldn't cost me forty minutes of scrolling.</p>
+        <p class="made">Web, Mac and iPhone.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="hour late" aria-labelledby="t-late">
+    <h2 class="when" id="t-late">Too late<small>headset on</small></h2>
+    <div class="things">
+      <article class="thing">
+        <h3>drumhero</h3>
+        <p>Sit behind a real-size drum kit in VR, sticks in hand, and play along with a band and a crowd that react to how well you're hitting. It can chart your own songs from the audio.</p>
+        <p class="made">Meta Quest, or any browser.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="after" aria-label="Older projects and contact">
+    <div class="col">
+      <h3>From before</h3>
+      <ul class="older">
+        <li><a href="https://github.com/tigran3rd/post-n-ghost">Post-n-Ghost</a>, a browser extension that lets you post to social media and nothing else</li>
+        <li><a href="https://github.com/tigran3rd/zentweet">ZenTweet</a>, an earlier go at the same idea</li>
+        <li><a href="https://github.com/tigran3rd/sf2">sf2</a>, a site for a hacker house on Treasure Island</li>
+      </ul>
+
+      <div class="contact">
+        <h3>Say hi</h3>
+        <p>I'm happy to talk about any of these, or about whatever annoys you before lunch.</p>
+        <div class="links">
+          <a href="https://t.me/tig_rank">Telegram</a>
+          <a href="https://www.linkedin.com/in/tig-rank/">LinkedIn</a>
+          <a href="https://github.com/tigran3rd">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+</body>
+</html>
